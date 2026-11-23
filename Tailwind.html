@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheatsheet Tailwind CSS — Decodificador y Referencia Rápida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82em;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.375rem;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        @media print {
+            body {
+                background: #ffffff !important;
+                font-size: 11px;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+            code {
+                background-color: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased selection:bg-cyan-200 selection:text-slate-900">
+
+    <!-- Barra Superior -->
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 print:static">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2.5">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Guía de Referencia</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-0.5">
+                    Tailwind CSS Cheatsheet
+                </h1>
+            </div>
+
+            <!-- Controles (Buscador + Imprimir PDF) -->
+            <div class="flex flex-wrap items-center gap-3 no-print">
+                <div class="relative flex-1 sm:w-72">
+                    <input type="text" id="searchInput" placeholder="Filtrar clase o propiedad (ej. flex, px, grid)..."
+                        class="w-full bg-slate-800 text-sm text-white placeholder-slate-400 pl-9 pr-4 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:border-cyan-400 transition-colors">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <button onclick="window.print()"
+                    class="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm px-4 py-2.5 rounded-xl transition-colors cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    Guardar PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+        <!-- Anatomía de una clase -->
+        <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 print-card">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div>
+                    <h2 class="text-sm font-extrabold uppercase tracking-wider text-slate-500">Anatomía de una clase</h2>
+                    <p class="text-slate-700 text-sm mt-1">
+                        Casi todas las utilidades siguen una misma estructura modular combinable de izquierda a derecha:
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 font-mono text-sm bg-slate-900 text-white px-4 py-3 rounded-xl">
+                    <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30" title="Breakpoint">md:</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30" title="Estado">hover:</span>
+                    <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" title="Propiedad">bg</span>
+                    <span>-</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" title="Valor">blue-600</span>
+                    <span>/</span>
+                    <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30" title="Opacidad">90</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4 pt-4 border-t border-slate-100 text-xs">
+                <div><span class="font-bold text-purple-700">1. Pantalla:</span> desde 768px</div>
+                <div><span class="font-bold text-amber-700">2. Estado:</span> al pasar cursor</div>
+                <div><span class="font-bold text-cyan-700">3. Propiedad:</span> fondo (bg)</div>
+                <div><span class="font-bold text-emerald-700">4. Valor:</span> azul tono 600</div>
+                <div><span class="font-bold text-rose-700">5. Opacidad:</span> 90% visible</div>
+            </div>
+        </section>
+
+        <!-- PARTE 1: DECODIFICADOR DE ABREVIACIONES -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-slate-900 text-white text-xs font-extrabold px-3 py-1 rounded-full">PARTE 1</span>
+                <h2 class="text-xl font-extrabold text-slate-900">Decodificador de abreviaciones</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-6 items-start">
+                <!-- Tabla Propiedades -->
+                <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden print-card filter-item">
+                    <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/80">
+                        <h3 class="font-bold text-slate-900">Abreviaciones de propiedades principales</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50/60 text-xs uppercase text-slate-500 border-b border-slate-200/80">
+                                <tr>
+                                    <th class="px-5 py-3">Prefijo</th>
+                                    <th class="px-5 py-3">CSS</th>
+                                    <th class="px-5 py-3">Qué controla</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>m</code></td><td class="px-5 py-2.5 text-slate-500">margin</td><td class="px-5 py-2.5">Espacio exterior alrededor del elemento.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>p</code></td><td class="px-5 py-2.5 text-slate-500">padding</td><td class="px-5 py-2.5">Relleno interior entre borde y contenido.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>w</code> / <code>h</code></td><td class="px-5 py-2.5 text-slate-500">width / height</td><td class="px-5 py-2.5">Ancho y alto (<code>min-w</code>, <code>max-w</code>, <code>min-h</code>, <code>max-h</code>).</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>bg</code></td><td class="px-5 py-2.5 text-slate-500">background</td><td class="px-5 py-2.5">Color, degradado o imagen de fondo.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>text</code></td><td class="px-5 py-2.5 text-slate-500">color / font-size</td><td class="px-5 py-2.5">Color (<code>text-slate-600</code>) o tamaño (<code>text-lg</code>).</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>font</code></td><td class="px-5 py-2.5 text-slate-500">font-weight / family</td><td class="px-5 py-2.5">Grosor (<code>font-bold</code>) o tipografía (<code>font-mono</code>).</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>leading</code></td><td class="px-5 py-2.5 text-slate-500">line-height</td><td class="px-5 py-2.5">Altura de línea / interlineado.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>tracking</code></td><td class="px-5 py-2.5 text-slate-500">letter-spacing</td><td class="px-5 py-2.5">Espaciado horizontal entre letras.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>border</code></td><td class="px-5 py-2.5 text-slate-500">border</td><td class="px-5 py-2.5">Grosor, estilo o color del borde.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>rounded</code></td><td class="px-5 py-2.5 text-slate-500">border-radius</td><td class="px-5 py-2.5">Redondeo de esquinas.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>gap</code></td><td class="px-5 py-2.5 text-slate-500">gap</td><td class="px-5 py-2.5">Separación entre celdas de <code>flex</code> o <code>grid</code>.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>space</code></td><td class="px-5 py-2.5 text-slate-500">margin en hijos</td><td class="px-5 py-2.5">Separación automática entre elementos apilados.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>z</code></td><td class="px-5 py-2.5 text-slate-500">z-index</td><td class="px-5 py-2.5">Orden de apilamiento entre capas superpuestas.</td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2.5"><code>shrink</code> / <code>grow</code></td><td class="px-5 py-2.5 text-slate-500">flex-shrink / grow</td><td class="px-5 py-2.5">Capacidad de encogerse o estirarse en <code>flex</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha Parte 1: Direcciones + Símbolos -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Direcciones -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden print-card filter-item">
+                        <div class="px-6 py-4 bg-slate-50 border-b border-slate-200/80">
+                            <h3 class="font-bold text-slate-900">Direcciones y ejes</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Se añaden pegadas a <code>m</code>, <code>p</code>, <code>border</code>, <code>rounded</code>, <code>gap</code> o <code>space</code></p>
+                        </div>
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-50/60 text-xs uppercase text-slate-500 border-b border-slate-200/80">
+                                <tr>
+                                    <th class="px-5 py-2.5">Sufijo</th>
+                                    <th class="px-5 py-2.5">Dirección</th>
+                                    <th class="px-5 py-2.5">Ejemplo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="filter-row"><td class="px-5 py-2"><code>t</code></td><td class="px-5 py-2">Top (Arriba)</td><td class="px-5 py-2"><code>mt-4</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>b</code></td><td class="px-5 py-2">Bottom (Abajo)</td><td class="px-5 py-2"><code>pb-6</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>l</code></td><td class="px-5 py-2">Left (Izquierda)</td><td class="px-5 py-2"><code>border-l</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>r</code></td><td class="px-5 py-2">Right (Derecha)</td><td class="px-5 py-2"><code>pr-2</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>x</code></td><td class="px-5 py-2">Eje X (Izq + Der)</td><td class="px-5 py-2"><code>px-6</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>y</code></td><td class="px-5 py-2">Eje Y (Arriba + Abajo)</td><td class="px-5 py-2"><code>my-8</code></td></tr>
+                                <tr class="filter-row"><td class="px-5 py-2"><code>s</code> / <code>e</code></td><td class="px-5 py-2">Start / End lógico</td><td class="px-5 py-2"><code>ms-2</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Símbolos Especiales -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-3 print-card filter-item">
+                        <h3 class="font-bold text-slate-900">Símbolos y modificadores especiales</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="filter-row">
+                                <span class="font-bold text-slate-900">Guion inicial (<code>-</code>):</span> Convierte medidas en negativas. Ej: <code>-mt-4</code> (<code>margin-top: -1rem</code>).
+                            </li>
+                            <li class="filter-row">
+                                <span class="font-bold text-slate-900">Barra inclinada (<code>/</code>):</span> Opacidad de color (0 a 100). Ej: <code>bg-slate-900/50</code>.
+                            </li>
+                            <li class="filter-row">
+                                <span class="font-bold text-slate-900">Exclamación (<code>!</code>):</span> Fuerza <code>!important</code>. Ej: <code>!mt-0</code> (v3) o <code>mt-0!</code> (v4).
+                            </li>
+                            <li class="filter-row">
+                                <span class="font-bold text-slate-900">Corchetes (<code>[...]</code>):</span> Valor CSS arbitrario puntual. Ej: <code>w-[340px]</code>, <code>bg-[#1a2b3c]</code>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARTE 2: AMPLIACIÓN POR ELEMENTOS -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-cyan-500 text-slate-950 text-xs font-extrabold px-3 py-1 rounded-full">PARTE 2</span>
+                <h2 class="text-xl font-extrabold text-slate-900">Ampliación por elementos</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <!-- 1. Layout, Display y Posicionamiento -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">1. Layout, Display y Posicionamiento</h3>
+                        <span class="text-xs font-mono text-slate-400">display / position</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Tipo de caja (<code>display</code>)</p>
+                            <p class="leading-relaxed"><code>block</code>, <code>inline-block</code>, <code>inline</code>, <code>flex</code>, <code>inline-flex</code>, <code>grid</code>, <code>hidden</code> (oculta elemento).</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Posicionamiento (<code>position</code>)</p>
+                            <ul class="space-y-1 text-slate-600">
+                                <li><code>static</code> — Flujo normal por defecto.</li>
+                                <li><code>relative</code> — Referencia para hijos con <code>absolute</code>.</li>
+                                <li><code>absolute</code> — Posición libre respecto al padre <code>relative</code>.</li>
+                                <li><code>fixed</code> — Fijo respecto a la ventana del navegador.</li>
+                                <li><code>sticky</code> — Se pega al hacer scroll al llegar a un punto (ej. <code>sticky top-0</code>).</li>
+                            </ul>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Coordenadas, capas y desbordamiento</p>
+                            <p class="leading-relaxed"><code>inset-0</code> (pega a los 4 bordes), <code>top-4</code>, <code>right-0</code>, <code>bottom-2</code>, <code>left-1/2</code>, <code>z-10</code>, <code>z-50</code>, <code>overflow-hidden</code>, <code>overflow-x-auto</code>, <code>aspect-video</code>.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. Flexbox y CSS Grid -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">2. Flexbox y CSS Grid</h3>
+                        <span class="text-xs font-mono text-slate-400">flex / grid</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Dirección y ajuste Flex</p>
+                            <p class="leading-relaxed"><code>flex-row</code> (fila), <code>flex-col</code> (columna), <code>flex-wrap</code> (salto de línea), <code>flex-1</code> (ocupa espacio libre), <code>shrink-0</code> (evita aplastarse), <code>grow</code>.</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Alineación (Eje principal y cruzado)</p>
+                            <ul class="space-y-1 text-slate-600">
+                                <li><strong>Principal:</strong> <code>justify-start</code>, <code>justify-center</code>, <code>justify-end</code>, <code>justify-between</code></li>
+                                <li><strong>Cruzado:</strong> <code>items-start</code>, <code>items-center</code>, <code>items-end</code>, <code>items-stretch</code></li>
+                            </ul>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Rejilla Grid y separación</p>
+                            <p class="leading-relaxed"><code>grid-cols-1</code> hasta <code>grid-cols-12</code> (columnas), <code>col-span-5</code>, <code>col-span-full</code> (extensión de hijo), <code>gap-4</code>, <code>gap-x-8</code>, <code>gap-y-2</code>.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. Dimensiones y Escala de Espaciado -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">3. Dimensiones y Espaciado</h3>
+                        <span class="text-xs font-mono text-slate-400">1 unidad = 4px</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/70 text-xs font-mono leading-relaxed filter-row">
+                            <strong>Escala base (0.25rem):</strong> 1=4px · 2=8px · 3=12px · 4=16px · 5=20px · 6=24px · 8=32px · 10=40px · 12=48px · 16=64px · 20=80px
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Anchos (<code>width</code>)</p>
+                            <p class="leading-relaxed"><code>w-full</code> (100%), <code>w-screen</code> (100vw), <code>w-fit</code> (ajustado al texto), <code>w-1/2</code> (50%), <code>w-1/3</code> (33.3%).</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Contenedores centrados y Altos</p>
+                            <p class="leading-relaxed"><code>max-w-md</code> (448px), <code>max-w-3xl</code> (768px), <code>max-w-7xl</code> (1280px) + <code>mx-auto</code>. Altos: <code>h-full</code>, <code>h-screen</code>, <code>min-h-screen</code>. Hijos: <code>space-y-4</code>.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. Tipografía -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">4. Tipografía</h3>
+                        <span class="text-xs font-mono text-slate-400">text / font / leading</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Escala de tamaño</p>
+                            <p class="leading-relaxed"><code>text-xs</code> (12px), <code>text-sm</code> (14px), <code>text-base</code> (16px), <code>text-lg</code> (18px), <code>text-xl</code> (20px), <code>text-2xl</code> (24px), <code>text-3xl</code> (30px), <code>text-4xl</code> (36px), <code>text-5xl</code> (48px).</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Grosor (<code>font-weight</code>)</p>
+                            <p class="leading-relaxed"><code>font-light</code> (300), <code>font-normal</code> (400), <code>font-medium</code> (500), <code>font-semibold</code> (600), <code>font-bold</code> (700), <code>font-extrabold</code> (800).</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Alineación, ritmo y recorte</p>
+                            <p class="leading-relaxed"><code>text-left</code>, <code>text-center</code>, <code>text-right</code>, <code>uppercase</code>, <code>leading-tight</code>, <code>leading-relaxed</code>, <code>tracking-widest</code>, <code>truncate</code> (corta con <code>...</code>), <code>line-clamp-2</code>.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. Fondos, Bordes y Efectos Visuales -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">5. Fondos, Bordes y Efectos</h3>
+                        <span class="text-xs font-mono text-slate-400">bg / border / shadow</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Fondos y degradados</p>
+                            <p class="leading-relaxed"><code>bg-white</code>, <code>bg-transparent</code>, <code>bg-slate-900</code>. Degradado: <code>bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600</code> (<code>to-r</code>, <code>to-b</code>, <code>to-tr</code>).</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Bordes, divisores y radios</p>
+                            <p class="leading-relaxed"><code>border</code> (1px), <code>border-2</code>, <code>border-dashed</code>, <code>divide-y divide-slate-200</code> (línea entre hijos). Radios: <code>rounded</code> (4px), <code>rounded-lg</code> (8px), <code>rounded-xl</code> (12px), <code>rounded-2xl</code> (16px), <code>rounded-full</code>.</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Sombras y desenfoque</p>
+                            <p class="leading-relaxed"><code>shadow-sm</code>, <code>shadow</code>, <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>, <code>opacity-75</code>, <code>backdrop-blur-md</code> (efecto cristal).</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. Responsive, Estados y Animaciones -->
+                <article class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4 print-card filter-item">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-base text-slate-900">6. Responsive, Estados y Animaciones</h3>
+                        <span class="text-xs font-mono text-slate-400">Mobile-First</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Breakpoints (anchos mínimos)</p>
+                            <p class="leading-relaxed"><code>sm:</code> ≥640px · <code>md:</code> ≥768px · <code>lg:</code> ≥1024px · <code>xl:</code> ≥1280px · <code>2xl:</code> ≥1536px</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Estados e interacción padre-hijo (<code>group</code>)</p>
+                            <p class="leading-relaxed"><code>hover:</code>, <code>focus:ring-2</code>, <code>active:</code>, <code>disabled:opacity-50</code>, <code>open:</code> (para <code>&lt;details&gt;</code>). Padre con <code>group</code> o <code>group/nombre</code> → hijo con <code>group-hover:translate-x-1</code> o <code>group-open/nombre:rotate-45</code>.</p>
+                        </div>
+                        <div class="filter-row">
+                            <p class="font-bold text-slate-900 mb-1">Transiciones y animaciones</p>
+                            <p class="leading-relaxed"><code>transition-all</code>, <code>transition-colors</code>, <code>duration-200</code>, <code>duration-300</code>, <code>scale-105</code>, <code>rotate-45</code>, <code>-translate-y-1</code>, <code>animate-pulse</code>, <code>animate-spin</code>, <code>animate-bounce</code>.</p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-7xl mx-auto px-6 py-6 text-center text-xs text-slate-400 border-t border-slate-200/70">
+        Cheatsheet de referencia rápida para Tailwind CSS · Lista para consulta en navegador o impresión en PDF.
+    </footer>
+
+    <!-- Script ligero para filtrado instantáneo -->
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const rows = document.querySelectorAll('.filter-row');
+        const cards = document.querySelectorAll('.filter-item');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+
+            rows.forEach(row => {
+                const match = row.textContent.toLowerCase().includes(term);
+                row.style.display = match ? '' : 'none';
+            });
+
+            cards.forEach(card => {
+                const visibleRows = card.querySelectorAll('.filter-row:not([style*="display: none"])');
+                const titleMatch = card.querySelector('h3')?.textContent.toLowerCase().includes(term);
+                card.style.display = (visibleRows.length > 0 || titleMatch || term === '') ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
